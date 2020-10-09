@@ -1,7 +1,7 @@
 package com.mrzisad.smartmall.utils;
 
 public class APILink {
-    public static final String MAIN_URL = "https://mizan.jannathost.com/api/";
+    public static final String MAIN_URL = "https://kazimizan.com/api/";
     public static final String AcceptShopkeeperAPI = MAIN_URL+"shopkeeper/accept/";
     public static final String CategoryAddAPI = MAIN_URL+"addcategory";
     public static final String CategoryListAPI = MAIN_URL+"category/list";
