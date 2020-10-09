@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">Smart Mall</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_title">Android Studio</string>
+
+    <string-array name="category">
+        <item>Electronics</item>
+        <item>Cloth</item>
+        <item>Mobile</item>
+    </string-array>
+    <string-array name="mall">
+        <item>Sanmar</item>
+        <item>Finlay Square</item>
+        <item>Chittagong Shoping</item>
+    </string-array>
+    <string-array name="payment_type">
+        <item>bKash</item>
+        <item>Rocket</item>
+        <item>By Cash</item>
+    </string-array>
+
+</resources>

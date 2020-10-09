@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:aapt="http://schemas.android.com/aapt" android:orientation="vertical" android:scrollbars="none" android:layout_width="match_parent" android:layout_height="match_parent" android:layout_margin="2dp">
+    <LinearLayout android:orientation="vertical" android:layout_width="match_parent" android:layout_height="match_parent">
+        <LinearLayout android:gravity="center" android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="match_parent" android:layout_weight="1">
+            <ImageView android:id="@+id/imgLogin" android:layout_width="match_parent" android:layout_height="match_parent" android:layout_margin="1dp" android:src="@drawable/login3" android:scaleType="fitXY" android:layout_weight="1"/>
+            <ImageView android:id="@+id/imgOffer1" android:layout_width="match_parent" android:layout_height="match_parent" android:layout_margin="1dp" android:src="@drawable/bkash" android:scaleType="fitXY" android:layout_weight="1"/>
+        </LinearLayout>
+        <LinearLayout android:gravity="center" android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="match_parent" android:layout_weight="1">
+            <ImageView android:id="@+id/imgOffer2" android:layout_width="match_parent" android:layout_height="match_parent" android:layout_margin="1dp" android:src="@drawable/bkash" android:scaleType="fitXY" android:layout_weight="1"/>
+            <ImageView android:id="@+id/imgOffer3" android:layout_width="match_parent" android:layout_height="match_parent" android:layout_margin="1dp" android:src="@drawable/bkash" android:scaleType="fitXY" android:layout_weight="1"/>
+        </LinearLayout>
+        <LinearLayout android:gravity="center" android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="match_parent" android:layout_weight="1">
+            <ImageView android:id="@+id/imgOffer4" android:layout_width="match_parent" android:layout_height="match_parent" android:layout_margin="1dp" android:src="@drawable/bkash" android:scaleType="fitXY" android:layout_weight="1"/>
+            <ImageView android:id="@+id/imgOffer5" android:layout_width="match_parent" android:layout_height="match_parent" android:layout_margin="1dp" android:src="@drawable/bkash" android:scaleType="fitXY" android:layout_weight="1"/>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

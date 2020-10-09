@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:aapt="http://schemas.android.com/aapt"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:padding="10dp" android:layout_width="match_parent" android:layout_height="match_parent">
+    <androidx.cardview.widget.CardView android:background="@color/colorLight" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginLeft="8dp" android:layout_marginTop="8dp" android:layout_marginRight="8dp" app:cardCornerRadius="10dp"
+        tools:ignore="MissingConstraints">
+        <LinearLayout android:gravity="center" android:orientation="vertical" android:layout_width="match_parent" android:layout_height="match_parent" android:layout_margin="10dp">
+            <ImageView android:layout_width="200dp" android:layout_height="200dp" android:src="@drawable/me"/>
+            <TextView android:textSize="20sp" android:textStyle="bold" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_margin="2dp" android:text="Mizanur Rahman"/>
+            <TextView android:textSize="18dp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_margin="2dp" android:text="Phone: 01952935767"/>
+            <TextView android:textSize="18dp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_margin="2dp" android:text="Email: mizan567@gmail.com"/>
+            <TextView android:textSize="18dp" android:gravity="center" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_margin="2dp" android:text="Department of Computer Science and Engineering"/>
+            <TextView android:textSize="20dp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_margin="2dp" android:text="Premier University, Chittagong"/>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

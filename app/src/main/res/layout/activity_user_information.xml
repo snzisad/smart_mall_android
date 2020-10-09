@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:aapt="http://schemas.android.com/aapt" android:paddingBottom="10dp" android:scrollbars="none" android:layout_width="match_parent" android:layout_height="match_parent">
+    <androidx.constraintlayout.widget.ConstraintLayout android:layout_width="match_parent" android:layout_height="match_parent">
+        <EditText android:id="@+id/edtUID" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_marginLeft="8dp" android:layout_marginTop="12dp" android:layout_marginRight="8dp" android:hint="Enter User ID" android:ems="10" android:inputType="number" app:layout_constraintEnd_toStartOf="@+id/btnSearch" app:layout_constraintHorizontal_bias="0" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent"/>
+        <Button android:id="@+id/btnSearch" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="12dp" android:layout_marginRight="8dp" android:text="Search" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="parent" style="@style/Widget.AppCompat.Button.Colored"/>
+        <LinearLayout android:orientation="vertical" android:id="@+id/layout_User_Info" android:visibility="gone" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginLeft="8dp" android:layout_marginTop="20dp" android:layout_marginRight="8dp" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@+id/edtUID">
+            <TextView android:textSize="18sp" android:textStyle="bold" android:id="@+id/tvName" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginBottom="5dp" android:text="Name: Sharif Noor Zisad"/>
+            <TextView android:textSize="18sp" android:id="@+id/tvAddress" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginBottom="5dp" android:text="Address: Oxygen"/>
+            <TextView android:textSize="18sp" android:id="@+id/tvPhone" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginBottom="5dp" android:text="Phone: 0185456"/>
+            <TextView android:textSize="18sp" android:id="@+id/tvEmail" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginBottom="5dp" android:text="Email: snzisad@gmail.com"/>
+            <TextView android:textSize="18sp" android:id="@+id/tvType" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginBottom="5dp" android:text="User Type: Shopkeeper"/>
+            <LinearLayout android:orientation="vertical" android:id="@+id/layout_ShopDetails" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp">
+                <TextView android:textSize="18sp" android:id="@+id/tvShopName" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginBottom="5dp" android:text="Shop Name: Cats Eye"/>
+                <TextView android:textSize="18sp" android:id="@+id/tvShopNumber" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginBottom="5dp" android:text="Shop Number: 102"/>
+                <TextView android:textSize="18sp" android:id="@+id/tvShopingMall" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginBottom="5dp" android:text="Shoping Mall: Sanmar"/>
+                <TextView android:textSize="18sp" android:id="@+id/tvShopCategory" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginBottom="5dp" android:text="Shop Category: Cloth"/>
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
