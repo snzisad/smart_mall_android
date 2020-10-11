@@ -122,7 +122,7 @@ public class CategoryAddActivity extends AppCompatActivity {
         progressDialog.show();
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 
-        StringRequest stringRequest = new StringRequest(APILink.CategoryAddAPI, new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, APILink.CategoryAddAPI, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 progressDialog.cancel();

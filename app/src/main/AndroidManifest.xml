@@ -16,10 +16,16 @@
         android:allowBackup="true" 
         android:supportsRtl="true" 
         android:roundIcon="@mipmap/ic_launcher_round"
+        android:usesCleartextTraffic="true"
         tools:ignore="HardcodedDebugMode">
         <activity android:theme="@style/AppTheme.NoActionBar" 
             android:name=".activity.CustomerActivity"/>
-        <activity android:name=".activity.LoginActivity"/>
+        <activity android:name=".activity.LoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
         <activity android:name=".activity.RegistrationActivity"/>
         <activity android:name=".activity.ProductDetailsActivity"/>
         <activity android:name=".activity.ShopkeeperActivity"/>
@@ -36,10 +42,10 @@
         <activity android:name=".activity.UserInformationActivity" android:parentActivityName=".activity.AdminActivity"/>
         <activity android:name=".activity.HelpActivity"/>
         <activity android:name=".activity.OfferActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN"/>-->
+<!--                <category android:name="android.intent.category.LAUNCHER"/>-->
+<!--            </intent-filter>-->
         </activity>
         <activity android:name=".activity.NewOfferActivity"/>
         <activity android:name=".activity.PaymentActivity"/>

@@ -23,6 +23,7 @@ import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkError;
 import com.android.volley.NoConnectionError;
 import com.android.volley.ParseError;
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.ServerError;
@@ -130,7 +131,7 @@ public class LoginActivity extends AppCompatActivity {
         progressDialog.show();
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 
-        StringRequest stringRequest = new StringRequest(APILink.LoginAPI, new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, APILink.LoginAPI, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 progressDialog.cancel();

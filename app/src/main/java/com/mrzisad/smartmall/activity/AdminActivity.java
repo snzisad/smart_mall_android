@@ -57,6 +57,8 @@ public class AdminActivity extends AppCompatActivity {
                 startActivity(new Intent(AdminActivity.this, NewOfferActivity.class));
             }
         });
+
+        ((Button) findViewById(R.id.btnAddOffer)).setVisibility(View.GONE);
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {

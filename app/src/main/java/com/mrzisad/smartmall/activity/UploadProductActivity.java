@@ -22,6 +22,7 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -170,7 +171,7 @@ public class UploadProductActivity extends AppCompatActivity {
         progressDialog.show();
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 
-        StringRequest stringRequest = new StringRequest(APILink.ProductUploadAPI, new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, APILink.ProductUploadAPI, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 progressDialog.cancel();
@@ -189,7 +190,13 @@ public class UploadProductActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 progressDialog.cancel();
-                Toast.makeText(UploadProductActivity.this, "Error. Please Try Again", 0).show();
+                try{
+                    String message = new String(error.networkResponse.data, "UTF-8");
+                    Toast.makeText(UploadProductActivity.this, ""+message, 0).show();
+                }
+                catch (Exception e){
+                    Toast.makeText(UploadProductActivity.this, "Error. Please Try Again", 0).show();
+                }
             }
         }){
             public Map<String, String> getParams() throws AuthFailureError {

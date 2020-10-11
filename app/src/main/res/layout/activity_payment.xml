@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:aapt="http://schemas.android.com/aapt" android:scrollbars="none" android:layout_width="match_parent" android:layout_height="match_parent">
+<ScrollView android:background="@color/colorLight" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:aapt="http://schemas.android.com/aapt" android:scrollbars="none" android:layout_width="match_parent" android:layout_height="match_parent">
     <LinearLayout android:orientation="vertical" android:padding="10dp" android:layout_width="match_parent" android:layout_height="match_parent">
-        <android.support.p003v7.widget.CardView android:background="@color/colorLight" android:layout_width="match_parent" android:layout_height="wrap_content" app:cardCornerRadius="5dp">
+        <androidx.cardview.widget.CardView android:background="@color/colorLight" android:layout_width="match_parent" android:layout_height="wrap_content" app:cardCornerRadius="5dp">
             <TextView android:textSize="18dp" android:textStyle="bold" android:id="@+id/textPaymentInfo" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_margin="10dp" android:text="Referance No: 112233 \10Amount: 1520 \10Number: 01867301260"/>
-        </android.support.p003v7.widget.CardView>
-        <android.support.p003v7.widget.CardView android:background="@color/colorLight" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="20dp" app:cardCornerRadius="5dp">
+        </androidx.cardview.widget.CardView>
+        <androidx.cardview.widget.CardView android:background="@color/colorLight" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="20dp" app:cardCornerRadius="5dp">
             <LinearLayout android:orientation="vertical" android:layout_width="match_parent" android:layout_height="match_parent">
                 <TextView android:textSize="18dp" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_margin="10dp" android:text="Procedure"/>
                 <View android:background="@color/colorAsh" android:layout_width="match_parent" android:layout_height="1dp"/>
                 <ImageView android:id="@+id/imgProcedure" android:padding="5dp" android:layout_width="match_parent" android:layout_height="200dp" android:src="@drawable/rocket_payment"/>
             </LinearLayout>
-        </android.support.p003v7.widget.CardView>
-        <android.support.p003v7.widget.CardView android:background="@color/colorLight" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="20dp" app:cardCornerRadius="5dp">
+        </androidx.cardview.widget.CardView>
+        <androidx.cardview.widget.CardView android:background="@color/colorLight" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="20dp" app:cardCornerRadius="5dp">
             <LinearLayout android:orientation="vertical" android:layout_width="match_parent" android:layout_height="match_parent">
                 <TextView android:textSize="18dp" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_margin="10dp" android:text="Transection Number"/>
                 <View android:background="@color/colorAsh" android:layout_width="match_parent" android:layout_height="1dp"/>
                 <EditText android:id="@+id/edtTrnx" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_margin="5dp" android:hint="Enter Transection Number" android:inputType="textPersonName"/>
                 <Button android:textColor="@color/colorLight" android:id="@+id/btnOrder" android:background="@color/colorPrimary" android:layout_width="match_parent" android:layout_height="40dp" android:layout_margin="5dp" android:layout_marginTop="5dp" android:text="Order"/>
             </LinearLayout>
-        </android.support.p003v7.widget.CardView>
+        </androidx.cardview.widget.CardView>
     </LinearLayout>
 </ScrollView>

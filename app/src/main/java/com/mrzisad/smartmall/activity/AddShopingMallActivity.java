@@ -120,9 +120,10 @@ public final class AddShopingMallActivity extends AppCompatActivity {
         progressDialog.show();
         final RequestQueue requestQueue = Volley.newRequestQueue(this);
 
-        final StringRequest stringRequest = new StringRequest(APILink.ShopingMallAddAPI, new Response.Listener<String>() {
+        final StringRequest stringRequest = new StringRequest(Request.Method.POST, APILink.ShopingMallAddAPI, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                progressDialog.cancel();
                 try {
                     JSONObject message = new JSONObject(response);
                     if (message.get(NotificationCompat.CATEGORY_STATUS).equals((Object) 1)) {

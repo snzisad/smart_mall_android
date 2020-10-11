@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.JsonReader;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -21,6 +23,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -33,6 +36,7 @@ import com.mrzisad.smartmall.utils.APILink;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -108,7 +112,7 @@ public class RegistrationActivity extends AppCompatActivity {
             }
         });
 
-        btnLogin.setOnClickListener(new View.OnClickListener() {
+        btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (!checkBlank()) {
@@ -230,7 +234,7 @@ public class RegistrationActivity extends AppCompatActivity {
         progressDialog.show();
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 
-        StringRequest stringRequest = new StringRequest(APILink.RegistrationAPI, new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, APILink.RegistrationAPI, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 progressDialog.cancel();
@@ -254,7 +258,13 @@ public class RegistrationActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 progressDialog.cancel();
-                Toast.makeText(RegistrationActivity.this, "Sorry, Email or Password already taken", 1).show();
+
+                try {
+                    String message = new String(error.networkResponse.data,"UTF-8");
+                    Toast.makeText(RegistrationActivity.this, ""+message, Toast.LENGTH_LONG).show();
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
             }
         }){
             public Map<String, String> getParams() throws AuthFailureError {
@@ -267,7 +277,7 @@ public class RegistrationActivity extends AppCompatActivity {
                 param.put("phone", edtPhone.getText().toString());
                 param.put("type", type);
 
-                if (type == "Shopkeeper") {
+                if (type.equals("Shopkeeper")) {
                     param.put("shopname", edtShopName.getText().toString());
                     param.put("shopno", edtShopNumber.getText().toString());
                     param.put("bkash", edtBkash.getText().toString());

@@ -1,7 +1,7 @@
 package com.mrzisad.smartmall.utils;
 
 public class APILink {
-    public static final String MAIN_URl = "https://kazimizan.com/";
+    public static final String MAIN_URl = "http://test.hosttruine.com/";
     public static final String API_URL = MAIN_URl+"api/";
     
     public static final String AcceptShopkeeperAPI = API_URL+"shopkeeper/accept/";
