@@ -3,6 +3,7 @@ package com.mrzisad.smartmall.activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -74,15 +75,17 @@ public class ProductDetailsActivity extends AppCompatActivity {
         tv_product_description = findViewById(R.id.tv_product_description);
         tv_shop_description = findViewById(R.id.tv_shop_description);
         layout_product_details = findViewById(R.id.layout_product_details);
+        tv_not_available = findViewById(R.id.tv_not_available);
+        btn_Buy = findViewById(R.id.btn_Buy);
 
         this.imagebtnlist = Arrays.asList(new ImageView[] {img_product1, img_product2, img_product3});
 
         this.progressDialog = new ProgressDialog(this);
-        ProgressDialog progressDialog2 = this.progressDialog;
         progressDialog.setMessage("Please Wait..");
         progressDialog.setCancelable(false);
 
         this.productList = new ArrayList();
+
         img_product1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -115,7 +118,6 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
     private final void getDataFromServer() {
         progressDialog.show();
-        productList.clear();
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(0, APILink.ProductDetailsAPI + APILink.PID, null, new Response.Listener<JSONObject>() {
@@ -126,6 +128,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
                 try {
                     if (response.getInt(NotificationCompat.CATEGORY_STATUS) == 1) {
                         JSONArray data = response.getJSONArray("response");
+                        productList.clear();
                         if (response.length() > 0) {
                             JSONObject product = data.getJSONObject(0);
                             JSONObject shop = product.getJSONObject("shop");
@@ -158,6 +161,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
                         Toast.makeText(ProductDetailsActivity.this, "Sorry, please try again", 1).show();
                     }
                 } catch (Exception e) {
+                    e.printStackTrace();
                     Toast.makeText(ProductDetailsActivity.this, e.getLocalizedMessage(), 1).show();
                 }
             }
@@ -172,139 +176,30 @@ public class ProductDetailsActivity extends AppCompatActivity {
         requestQueue.add(jsonObjectRequest);
     }
 
-    /* access modifiers changed from: private */
-    /* JADX WARNING: Removed duplicated region for block: B:14:0x0054  */
-    /* JADX WARNING: Removed duplicated region for block: B:28:0x00e0  */
-    /* Code decompiled incorrectly, please refer to instructions dump. */
-    public final void loadImages(java.lang.String r9) {
-        /*
-            r8 = this;
-            r0 = r9
-            java.lang.CharSequence r0 = (java.lang.CharSequence) r0
-            java.lang.String r1 = "\\|ZISAD\\|"
-            kotlin.text.Regex r2 = new kotlin.text.Regex
-            r2.<init>((java.lang.String) r1)
-            r1 = 0
-            java.util.List r0 = r2.split(r0, r1)
-            r2 = r1
-            boolean r3 = r0.isEmpty()
-            if (r3 != 0) goto L_0x0049
-            int r3 = r0.size()
-            java.util.ListIterator r3 = r0.listIterator(r3)
-            r4 = 0
-        L_0x001f:
-            boolean r5 = r3.hasPrevious()
-            if (r5 == 0) goto L_0x0048
-            java.lang.Object r5 = r3.previous()
-            java.lang.String r5 = (java.lang.String) r5
-            r6 = r5
-            java.lang.CharSequence r6 = (java.lang.CharSequence) r6
-            int r6 = r6.length()
-            r7 = 1
-            if (r6 != 0) goto L_0x0037
-            r5 = 1
-            goto L_0x0038
-        L_0x0037:
-            r5 = 0
-        L_0x0038:
-            if (r5 != 0) goto L_0x0047
-            r4 = r0
-            java.lang.Iterable r4 = (java.lang.Iterable) r4
-            int r5 = r3.nextIndex()
-            int r5 = r5 + r7
-            java.util.List r4 = kotlin.collections.CollectionsKt.take(r4, r5)
-            goto L_0x004e
-        L_0x0047:
-            goto L_0x001f
-        L_0x0048:
-            goto L_0x004a
-        L_0x0049:
-        L_0x004a:
-            java.util.List r4 = kotlin.collections.CollectionsKt.emptyList()
-        L_0x004e:
-            java.util.Collection r4 = (java.util.Collection) r4
-            r0 = r4
-            r2 = r1
-            if (r0 == 0) goto L_0x00e0
-            r3 = r0
-            java.lang.String[] r4 = new java.lang.String[r1]
-            java.lang.Object[] r4 = r3.toArray(r4)
-            if (r4 == 0) goto L_0x00d8
-            r0 = r4
-            java.lang.String[] r0 = (java.lang.String[]) r0
-            r8.picturelist = r0
-            r2 = r8
-            android.support.v4.app.FragmentActivity r2 = (android.support.p000v4.app.FragmentActivity) r2
-            com.bumptech.glide.RequestManager r2 = com.bumptech.glide.Glide.with((android.support.p000v4.app.FragmentActivity) r2)
-            java.lang.StringBuilder r3 = new java.lang.StringBuilder
-            r3.<init>()
-            java.lang.String r4 = "https://mizan.jannathost.com/picture/"
-            r3.append(r4)
-            r4 = r0[r1]
-            r3.append(r4)
-            java.lang.String r3 = r3.toString()
-            com.bumptech.glide.RequestBuilder r2 = r2.load((java.lang.String) r3)
-            int r3 = com.client.snzisad.smartmall.C0611R.C0613id.img_product_full
-            android.view.View r3 = r8._$_findCachedViewById(r3)
-            android.widget.ImageView r3 = (android.widget.ImageView) r3
-            r2.into((android.widget.ImageView) r3)
-            int r2 = r0.length
-            r3 = 0
-        L_0x008d:
-            if (r3 >= r2) goto L_0x00d7
-            java.util.List<android.widget.ImageView> r4 = r8.imagebtnlist
-            if (r4 != 0) goto L_0x0099
-            java.lang.String r5 = "imagebtnlist"
-            kotlin.jvm.internal.Intrinsics.throwUninitializedPropertyAccessException(r5)
-        L_0x0099:
-            java.lang.Object r4 = r4.get(r3)
-            android.widget.ImageView r4 = (android.widget.ImageView) r4
-            r4.setVisibility(r1)
-            r4 = r8
-            android.support.v4.app.FragmentActivity r4 = (android.support.p000v4.app.FragmentActivity) r4
-            com.bumptech.glide.RequestManager r4 = com.bumptech.glide.Glide.with((android.support.p000v4.app.FragmentActivity) r4)
-            java.lang.StringBuilder r5 = new java.lang.StringBuilder
-            r5.<init>()
-            java.lang.String r6 = "https://mizan.jannathost.com/picture/"
-            r5.append(r6)
-            r6 = r0[r3]
-            r5.append(r6)
-            java.lang.String r5 = r5.toString()
-            com.bumptech.glide.RequestBuilder r4 = r4.load((java.lang.String) r5)
-            java.util.List<android.widget.ImageView> r5 = r8.imagebtnlist
-            if (r5 != 0) goto L_0x00ca
-            java.lang.String r6 = "imagebtnlist"
-            kotlin.jvm.internal.Intrinsics.throwUninitializedPropertyAccessException(r6)
-        L_0x00ca:
-            java.lang.Object r5 = r5.get(r3)
-            android.widget.ImageView r5 = (android.widget.ImageView) r5
-            r4.into((android.widget.ImageView) r5)
-            int r3 = r3 + 1
-            goto L_0x008d
-        L_0x00d7:
-            return
-        L_0x00d8:
-            kotlin.TypeCastException r1 = new kotlin.TypeCastException
-            java.lang.String r4 = "null cannot be cast to non-null type kotlin.Array<T>"
-            r1.<init>(r4)
-            throw r1
-        L_0x00e0:
-            kotlin.TypeCastException r1 = new kotlin.TypeCastException
-            java.lang.String r3 = "null cannot be cast to non-null type java.util.Collection<T>"
-            r1.<init>(r3)
-            throw r1
-            return
-        */
-        throw new UnsupportedOperationException("Method not decompiled: com.client.snzisad.smartmall.ProductDetailsActivity.loadImages(java.lang.String):void");
+    public final void loadImages(String images) {
+        picturelist = images.split("\\|ZISAD\\|");
+
+        Glide.with(this).load(APILink.PictureLink+picturelist[0]).into(img_product1);
+        Glide.with(this).load(APILink.PictureLink+picturelist[0]).into(img_product_full);
+
+        if(picturelist.length>1){
+            Glide.with(this).load(APILink.PictureLink+picturelist[1]).into(img_product2);
+        }
+        else{
+            img_product2.setVisibility(View.GONE);
+            img_product3.setVisibility(View.GONE);
+        }
+
+        if(picturelist.length>2){
+            Glide.with(this).load(APILink.PictureLink+picturelist[2]).into(img_product3);
+        }
+        else{
+            img_product3.setVisibility(View.GONE);
+        }
     }
 
-    /* access modifiers changed from: private */
     public final void loadImage(int i) {
-        StringBuilder sb = new StringBuilder();
-        sb.append(APILink.PictureLink);
-        String[] strArr = this.picturelist;
-        sb.append(strArr[i]);
-        Glide.with(this).load(sb.toString()).into(img_product_full);
+        Glide.with(this).load(APILink.PictureLink+picturelist[i]).into(img_product_full);
     }
 
     /* access modifiers changed from: private */

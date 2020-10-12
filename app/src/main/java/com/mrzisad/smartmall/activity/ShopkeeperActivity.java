@@ -136,4 +136,10 @@ public class ShopkeeperActivity extends AppCompatActivity {
         finish();
         return true;
     }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        getDataFromServer();
+    }
 }

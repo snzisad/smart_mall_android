@@ -17,6 +17,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.NotificationCompat;
 
 import com.android.volley.AuthFailureError;
@@ -86,6 +87,7 @@ public class ProductListAdapter extends BaseAdapter {
         TextView tvPrice = (TextView) v.findViewById(R.id.tvPrice);
         TextView tvPID = (TextView) v.findViewById(R.id.tvPID);
         Button btnBuy = (Button) v.findViewById(R.id.btnBuy);
+        ConstraintLayout cl_product_info = (ConstraintLayout) v.findViewById(R.id.cl_product_info);
         final Button btnAddtoCart = (Button) v.findViewById(R.id.btnAddtoCart);
         ImageView imgProduct = (ImageView) v.findViewById(R.id.imgProduct);
         final int i = position;
@@ -102,7 +104,7 @@ public class ProductListAdapter extends BaseAdapter {
                     btnAddtoCart.setBackgroundColor(0);
                     btnAddtoCart.setText("Added");
                     btnAddtoCart.setClickable(false);
-                    btnAddtoCart.setTextColor(ProductListAdapter.this.context.getResources().getColor(R.color.colorAsh));
+                    btnAddtoCart.setTextColor(context.getResources().getColor(R.color.colorAsh));
                 }
             });
             this.btnCancelOrder.setOnClickListener(new View.OnClickListener() {
@@ -121,7 +123,7 @@ public class ProductListAdapter extends BaseAdapter {
         tvPID.setText("ID: " + pid);
         tvName.setText(this.productList.get(position).getName());
         tvPrice.setText(this.productList.get(position).getPrice() + " ৳");
-        v.setOnClickListener(new View.OnClickListener() {
+        cl_product_info.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 APILink.PID = ProductListAdapter.this.productList.get(i).getId();
                 ProductListAdapter.this.context.startActivity(new Intent(ProductListAdapter.this.context, ProductDetailsActivity.class));
@@ -156,7 +158,7 @@ public class ProductListAdapter extends BaseAdapter {
         AlertDialog.Builder builder = new AlertDialog.Builder(this.context);
         View view = View.inflate(this.context, R.layout.layout_buy_product, (ViewGroup) null);
         builder.setView(view);
-        AlertDialog alertDialog = builder.create();
+        final AlertDialog alertDialog = builder.create();
         alertDialog.show();
         final Spinner spinnerType = (Spinner) view.findViewById(R.id.spinnerType);
         final Button btnBuy = (Button) view.findViewById(R.id.btnBuy);
@@ -172,16 +174,12 @@ public class ProductListAdapter extends BaseAdapter {
             public void onNothingSelected(AdapterView<?> adapterView) {
             }
         });
+
         final EditText editText = (EditText) view.findViewById(R.id.edtQuantity);
         final int i = position;
-        final Spinner spinner = spinnerType;
         final ProgressBar progressBar = (ProgressBar) view.findViewById(R.id.pbBuy);
-        final Button button = btnBuy;
         final EditText editText2 = (EditText) view.findViewById(R.id.edtSize);
-        AlertDialog.Builder builder2 = builder;
-        Button btnBuy2 = btnBuy;
-        final AlertDialog alertDialog2 = alertDialog;
-        btnBuy2.setOnClickListener(new View.OnClickListener() {
+        btnBuy.setOnClickListener(new View.OnClickListener() {
             ProductPayment productPayment = new ProductPayment();
 
             public void onClick(View v) {
@@ -189,22 +187,20 @@ public class ProductListAdapter extends BaseAdapter {
                     editText.setError("Required");
                 } else if (ProductListAdapter.this.productList.get(i).getQuantity().intValue() <= 0) {
                     Toast.makeText(ProductListAdapter.this.context, "Sorry, out of stock", 0).show();
-                } else if (ProductListAdapter.this.productList.get(i).getQuantity().intValue() < Integer.parseInt(editText.getText().toString())) {
-                    Context context = ProductListAdapter.this.context;
+                } else if (productList.get(i).getQuantity().intValue() < Integer.parseInt(editText.getText().toString())) {
                     Toast.makeText(context, "Sorry, only " + ProductListAdapter.this.productList.get(i).getQuantity() + " items available", 0).show();
-                } else if (spinner.getSelectedItemPosition() == 2) {
-                    ProductListAdapter productListAdapter = ProductListAdapter.this;
-                    productListAdapter.sendDataToServer(progressBar, button, productListAdapter.productList.get(i).getId(), editText.getText().toString(), editText2.getText().toString(), spinner.getSelectedItem().toString(), alertDialog2);
-                } else if (spinner.getSelectedItemPosition() == 0 && TextUtils.isEmpty(ProductListAdapter.this.productList.get(i).shop.getBkash())) {
-                    Toast.makeText(ProductListAdapter.this.context, "Sorry, you cann't buy this product using bKash", 0).show();
-                } else if (spinner.getSelectedItemPosition() != 1 || !TextUtils.isEmpty(ProductListAdapter.this.productList.get(i).shop.getRocket())) {
-                    ProductPayment.type = spinner.getSelectedItemPosition();
-                    ProductPayment.product = ProductListAdapter.this.productList.get(i);
+                } else if (spinnerType.getSelectedItemPosition() == 2) {
+                    sendDataToServer(progressBar, btnBuy, productList.get(i).getId(), editText.getText().toString(), editText2.getText().toString(), spinnerType.getSelectedItem().toString(), alertDialog);
+                } else if (spinnerType.getSelectedItemPosition() == 0 && TextUtils.isEmpty(productList.get(i).shop.getBkash())) {
+                    Toast.makeText(context, "Sorry, you cann't buy this product using bKash", 0).show();
+                } else if (spinnerType.getSelectedItemPosition() != 1 || !TextUtils.isEmpty(ProductListAdapter.this.productList.get(i).shop.getRocket())) {
+                    ProductPayment.type = spinnerType.getSelectedItemPosition();
+                    ProductPayment.product = productList.get(i);
                     ProductPayment.quantity = Integer.parseInt(editText.getText().toString());
                     ProductPayment.size = editText2.getText().toString();
                     ProductPayment.position = i;
                     ProductListAdapter.this.context.startActivity(new Intent(ProductListAdapter.this.context, PaymentActivity.class));
-                    alertDialog2.cancel();
+                    alertDialog.cancel();
                 } else {
                     Toast.makeText(ProductListAdapter.this.context, "Sorry, you cann't buy this product using Rocket", 0).show();
                 }

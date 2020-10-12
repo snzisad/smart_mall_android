@@ -131,8 +131,12 @@ public class BasketShoping extends AppCompatActivity {
         builder.setView(view);
         final AlertDialog alertDialog = builder.create();
         alertDialog.show();
+
         final Button btnBuy = (Button) view.findViewById(R.id.btnBuy);
         final Spinner spinnerType = (Spinner) view.findViewById(R.id.spinnerType);
+        final EditText edtQuantity = view.findViewById(R.id.edtQuantity);
+        final EditText edtSize = view.findViewById(R.id.edtSize);
+
         spinnerType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -158,7 +162,7 @@ public class BasketShoping extends AppCompatActivity {
                         return;
                     }
                     int intValue = products.get(position).getQuantity().intValue();
-                    if (intValue>Integer.parseInt(edtQuantity.getText().toString())) {
+                    if (intValue < Integer.parseInt(edtQuantity.getText().toString())) {
                         Toast.makeText(BasketShoping.this, "Sorry, only " + intValue + " items available", 0).show();
                         return;
                     }

@@ -63,9 +63,9 @@ public class NotificationActivity extends AppCompatActivity {
                     if (response.getInt(NotificationCompat.CATEGORY_STATUS) == 1) {
                         JSONArray data = response.getJSONArray("response");
                         int length = data.length();
+                        orderList.clear();
                         for (int i = 0; i < length; i++) {
                             JSONObject chield = data.getJSONObject(i);
-                            orderList.clear();
                             Order order = new Gson().fromJson(chield.toString(), Order.class);
                             orderList.add(order);
                         }

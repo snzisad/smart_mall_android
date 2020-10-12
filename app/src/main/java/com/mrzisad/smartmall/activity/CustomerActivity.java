@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
@@ -171,6 +172,7 @@ public class CustomerActivity extends AppCompatActivity implements NavigationVie
             @Override
             public void onResponse(JSONObject response) {
                 progressDialog.cancel();
+                Log.e("Response", response.toString());
                 try {
                     if (response.getInt(NotificationCompat.CATEGORY_STATUS) == 1) {
                         JSONArray data = response.getJSONArray("response");

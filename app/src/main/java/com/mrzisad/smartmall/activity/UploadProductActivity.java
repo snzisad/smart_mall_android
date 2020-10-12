@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,6 +23,7 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -137,8 +139,8 @@ public class UploadProductActivity extends AppCompatActivity {
         if (requestCode == 1000 && resultCode == -1 && data != null) {
             Uri filpath = data.getData();
             try {
-                this.imageBitmap[this.position] = BitmapFactory.decodeStream(getContentResolver().openInputStream(filpath));
-                imageView.setImageBitmap(this.imageBitmap[this.position]);
+                imageBitmap[position] = BitmapFactory.decodeStream(getContentResolver().openInputStream(filpath));
+                imageView.setImageBitmap(imageBitmap[position]);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -175,10 +177,11 @@ public class UploadProductActivity extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 progressDialog.cancel();
+                Log.e("response", ""+response);
                 try {
                     if (new JSONObject(response).getInt(NotificationCompat.CATEGORY_STATUS) == 1) {
                         Toast.makeText(UploadProductActivity.this, "Product Uploaded Successfully", 0).show();
-                        startActivity(new Intent(UploadProductActivity.this, UploadProductActivity.class));
+                        startActivity(new Intent(UploadProductActivity.this, ShopkeeperActivity.class));
                         finish();
                     }
                 } catch (Exception e) {
@@ -193,6 +196,7 @@ public class UploadProductActivity extends AppCompatActivity {
                 try{
                     String message = new String(error.networkResponse.data, "UTF-8");
                     Toast.makeText(UploadProductActivity.this, ""+message, 0).show();
+                    Log.e("Resonse Message", message);
                 }
                 catch (Exception e){
                     Toast.makeText(UploadProductActivity.this, "Error. Please Try Again", 0).show();
@@ -209,6 +213,7 @@ public class UploadProductActivity extends AppCompatActivity {
                 param.put("size", edtSize.getText().toString());
                 param.put("quantity", edtQuantity.getText().toString());
                 param.put("images", convertBitmaptoString());
+
                 return param;
             }
 
@@ -219,6 +224,8 @@ public class UploadProductActivity extends AppCompatActivity {
             }
         };
 
+        DefaultRetryPolicy mRetryPolicy = new DefaultRetryPolicy(0, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        stringRequest.setRetryPolicy(mRetryPolicy);
         requestQueue.add(stringRequest);
     }
 

@@ -74,9 +74,9 @@ public class UpdateProductActivity extends AppCompatActivity {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (checkBlank()) {
-                    sendDataToServer();
-                }
+            if (!checkBlank()) {
+                sendDataToServer();
+            }
             }
         });
     }

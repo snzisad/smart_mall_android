@@ -56,6 +56,8 @@ public class PaymentActivity extends AppCompatActivity {
 
         imgProcedure = findViewById(R.id.imgProcedure);
         textPaymentInfo = findViewById(R.id.textPaymentInfo);
+        btnOrder = findViewById(R.id.btnOrder);
+        edtTrnx = findViewById(R.id.edtTrnx);
 
         if (ProductPayment.type == 0) {
             Product.Shop shop = ProductPayment.product.shop;
@@ -107,10 +109,11 @@ public class PaymentActivity extends AppCompatActivity {
             public void onResponse(String response) {
                 progressDialog.cancel();
                 try {
-                    if (new JSONObject(response).get(NotificationCompat.CATEGORY_STATUS).toString() == "1") {
+                    if (new JSONObject(response).get(NotificationCompat.CATEGORY_STATUS).toString().equals("1")) {
                         Toast.makeText(PaymentActivity.this, "Product ordered Successfully", 0).show();
                         finish();
-                    } else {
+                    }
+                    else {
                         Toast.makeText(PaymentActivity.this, "Please try again", 0).show();
                     }
                 } catch (Exception e) {
@@ -122,7 +125,13 @@ public class PaymentActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 progressDialog.cancel();
-                Toast.makeText(PaymentActivity.this, "Error. Please Try Again", 0).show();
+                try{
+                    String message = new String(error.networkResponse.data, "UTF-8");
+                    Toast.makeText(PaymentActivity.this, ""+message, 0).show();
+                }
+                catch (Exception e){
+                    Toast.makeText(PaymentActivity.this, "Error. Please Try Again", 0).show();
+                }
             }
         }){
             public Map<String, String> getParams() throws AuthFailureError {
@@ -133,8 +142,7 @@ public class PaymentActivity extends AppCompatActivity {
                 String id = product.getId();
                 param.put("product_id", id);
                 param.put("quantity", String.valueOf(ProductPayment.quantity));
-                String str2 = ProductPayment.size;
-                param.put("size", str2);
+                param.put("size", ProductPayment.size);
                 param.put("payment_type", type);
                 param.put("trxnid", edtTrnx.getText().toString());
                 return param;
