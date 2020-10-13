@@ -87,6 +87,7 @@ public class CustomerActivity extends AppCompatActivity implements NavigationVie
         ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawer_layout, (Toolbar) findViewById(R.id.toolbar), R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer_layout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
+        actionBarDrawerToggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.colorLight));
         nav_view.setNavigationItemSelectedListener(this);
 
         ((Button) findViewById(R.id.btnConfirmOrder)).setOnClickListener(new View.OnClickListener() {
@@ -219,6 +220,7 @@ public class CustomerActivity extends AppCompatActivity implements NavigationVie
 
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
+
         return true;
     }
 

@@ -4,11 +4,22 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="toolbarStyle">@style/MyToolbarStyle</item>
+        <item name="actionOverflowButtonStyle">@style/actionButtonOverflow</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="MyToolbarStyle" parent="Widget.AppCompat.Toolbar">
+        <item name="titleTextColor">@color/colorLight</item>
+        <item name="color">@color/colorLight</item>
+    </style>
+
+    <style name="actionButtonOverflow"   parent="Widget.AppCompat.Light.ActionButton.Overflow">
+        <item name="android:tint">@color/colorLight</item>
     </style>
 
 </resources>
