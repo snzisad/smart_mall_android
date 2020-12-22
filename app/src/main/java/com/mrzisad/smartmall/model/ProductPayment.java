@@ -5,5 +5,5 @@ public class ProductPayment {
     public static Product product;
     public static int quantity;
     public static String size;
-    public static int type;
+    public static int type, product_type;
 }

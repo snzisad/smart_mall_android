@@ -214,7 +214,8 @@ public class CustomerActivity extends AppCompatActivity implements NavigationVie
         if (drawer_layout.isDrawerOpen((int) GravityCompat.START)) {
             drawer_layout.closeDrawer((int) GravityCompat.START);
         } else {
-            super.onBackPressed();
+            finishAffinity();
+            finish();
         }
     }
 
@@ -245,4 +246,6 @@ public class CustomerActivity extends AppCompatActivity implements NavigationVie
             subMenu.add(R.id.navItemShopingMall, i, 0, mallName.get(i));
         }
     }
+
+
 }

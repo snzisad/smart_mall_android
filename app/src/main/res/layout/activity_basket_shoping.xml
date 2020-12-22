@@ -16,6 +16,7 @@
             <TextView android:textColor="@color/colorDark" android:gravity="right" android:layout_width="match_parent" android:layout_height="match_parent" android:text="Total: " android:layout_weight="1"/>
             <TextView android:textColor="@color/colorDark" android:gravity="left" android:id="@+id/tvTotalPrice" android:layout_width="match_parent" android:layout_height="match_parent" android:text="1500" android:layout_weight="1"/>
         </LinearLayout>
-        <Button android:textColor="@color/colorLight" android:id="@+id/btnCloseShoping" android:background="@color/colorRed" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_margin="10dp" android:text="Close Shoping" android:textAllCaps="true"/>
+        <Button android:textColor="@color/colorLight" android:id="@+id/btnBuyAll" android:background="@color/colorPrimary" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_margin="5dp" android:text="BUy All" android:textAllCaps="true"/>
+        <Button android:textColor="@color/colorLight" android:id="@+id/btnCloseShoping" android:background="@color/colorRed" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_margin="5dp" android:text="Close Shoping" android:textAllCaps="true"/>
     </LinearLayout>
 </ScrollView>

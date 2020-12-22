@@ -2,6 +2,7 @@ package com.mrzisad.smartmall.activity;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -22,13 +23,16 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.mrzisad.smartmall.MainActivity;
 import com.mrzisad.smartmall.R;
 import com.mrzisad.smartmall.model.Product;
 import com.mrzisad.smartmall.model.ProductPayment;
 import com.mrzisad.smartmall.utils.APILink;
+import com.mrzisad.smartmall.utils.DataContainer;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -42,6 +46,9 @@ public class PaymentActivity extends AppCompatActivity {
     TextView textPaymentInfo;
     Button btnOrder;
     EditText edtTrnx;
+    Product product;
+    ArrayList products;
+    boolean isOrdered = false;
 
 
     /* access modifiers changed from: protected */
@@ -59,26 +66,48 @@ public class PaymentActivity extends AppCompatActivity {
         btnOrder = findViewById(R.id.btnOrder);
         edtTrnx = findViewById(R.id.edtTrnx);
 
+        products = new ArrayList();
+
         if (ProductPayment.type == 0) {
-            Product.Shop shop = ProductPayment.product.shop;
-            String bkash = shop.getBkash();
-            this.account = bkash;
+            if(ProductPayment.product_type == 1){
+                this.account = "01952935767";
+            }
+            else{
+                Product.Shop shop = ProductPayment.product.shop;
+                this.account = shop.getBkash();
+            }
             this.type = "bKash";
         } else {
-            Product.Shop shop2 = ProductPayment.product.shop;
-            String rocket = shop2.getRocket();
-            this.account = rocket;
+            if(ProductPayment.product_type == 1){
+                this.account = "01952935767";
+            }
+            else{
+                Product.Shop shop2 = ProductPayment.product.shop;
+                this.account = shop2.getRocket();
+            }
             this.type = "Rocket";
         }
 
         imgProcedure.setImageDrawable(getResources().getDrawable(this.procedure[ProductPayment.type].intValue()));
-        Product product = ProductPayment.product;
-        String price = product.getPrice();
-        int amount = Integer.parseInt(price) * ProductPayment.quantity;
 
         StringBuilder sb = new StringBuilder();
         sb.append("Referance No: ");
-        sb.append(product.getId());
+        int amount = 0;
+        if(ProductPayment.product_type == 1){
+            sb.append("11223344");
+            products.addAll(DataContainer.products);
+            for (int i = 0; i < products.size(); i++) {
+                Product product1 = (Product) products.get(i);
+                amount += Integer.parseInt(product1.getPrice()) * ProductPayment.quantity;
+            }
+        }
+        else{
+            products.add(ProductPayment.product);
+            Product product1 = ProductPayment.product;
+            amount += Integer.parseInt(product1.getPrice()) * ProductPayment.quantity;
+            sb.append(product1.getId());
+        }
+
         sb.append("\nAmount: ");
         sb.append(amount);
         sb.append(" taka");
@@ -93,7 +122,10 @@ public class PaymentActivity extends AppCompatActivity {
                 if (TextUtils.isEmpty(edtTrnx.getText())) {
                     edtTrnx.setError("Required");
                 } else {
-                    sendDataToServer();
+                    for (int i = 0; i < products.size(); i++) {
+                        product = (Product) products.get(i);
+                        sendDataToServer();
+                    }
                 }
             }
         });
@@ -110,7 +142,14 @@ public class PaymentActivity extends AppCompatActivity {
                 progressDialog.cancel();
                 try {
                     if (new JSONObject(response).get(NotificationCompat.CATEGORY_STATUS).toString().equals("1")) {
-                        Toast.makeText(PaymentActivity.this, "Product ordered Successfully", 0).show();
+                        if(!isOrdered) {
+                            Toast.makeText(PaymentActivity.this, "Product ordered Successfully", 0).show();
+                            if(ProductPayment.product_type == 1){
+                                DataContainer.products = null;
+                                startActivity(new Intent(PaymentActivity.this, CustomerActivity.class));
+                            }
+                        }
+                        isOrdered = true;
                         finish();
                     }
                     else {
@@ -136,11 +175,8 @@ public class PaymentActivity extends AppCompatActivity {
         }){
             public Map<String, String> getParams() throws AuthFailureError {
                 HashMap param = new HashMap();
-                String str = APILink.UID;
-                param.put("user_id", str);
-                Product product = ProductPayment.product;
-                String id = product.getId();
-                param.put("product_id", id);
+                param.put("user_id", APILink.UID);
+                param.put("product_id", product.getId());
                 param.put("quantity", String.valueOf(ProductPayment.quantity));
                 param.put("size", ProductPayment.size);
                 param.put("payment_type", type);

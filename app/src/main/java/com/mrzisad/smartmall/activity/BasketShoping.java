@@ -45,10 +45,10 @@ public class BasketShoping extends AppCompatActivity {
     private int position;
     public List<Product> products;
     LinearLayout layoutProductList;
-    Button btnCloseShoping;
+    Button btnCloseShoping, btnBuyAll;
     TextView tvTotalPrice;
-    EditText edtQuantity, edtSize;
     ProgressBar pbBuy;
+    boolean isOrdered = false;
 
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,17 +57,22 @@ public class BasketShoping extends AppCompatActivity {
 
         products = DataContainer.products;
         btnCloseShoping = findViewById(R.id.btnCloseShoping);
+        btnBuyAll = findViewById(R.id.btnBuyAll);
         layoutProductList = findViewById(R.id.layoutProductList);
         tvTotalPrice = findViewById(R.id.tvTotalPrice);
-        edtQuantity = findViewById(R.id.edtQuantity);
-        edtSize = findViewById(R.id.edtSize);
-        pbBuy = findViewById(R.id.pbBuy);
 
         btnCloseShoping.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(BasketShoping.this, CustomerActivity.class));
                 finish();
+            }
+        });
+
+        btnBuyAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showPaymentDialog();
             }
         });
 
@@ -125,6 +130,57 @@ public class BasketShoping extends AppCompatActivity {
         finish();
     }
 
+    public final void showPaymentDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View view = getLayoutInflater().inflate(R.layout.layout_payment_method, (ViewGroup) null, false);
+        builder.setView(view);
+        final AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+
+        pbBuy = view.findViewById(R.id.pbBuy);
+        final Button btnBuy = (Button) view.findViewById(R.id.btnBuy);
+        final Spinner spinnerType = (Spinner) view.findViewById(R.id.spinnerType);
+
+        spinnerType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if (spinnerType.getSelectedItemPosition() == 2) {
+                    btnBuy.setText("Order");
+                    return;
+                }
+                btnBuy.setText("Continue");
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        btnBuy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (spinnerType.getSelectedItemPosition() == 2) {
+                    String obj3 = spinnerType.getSelectedItem().toString();
+                    for (int i = 0; i < products.size(); i++) {
+                        sendDataToServer(pbBuy, btnBuy, products.get(i).getId(), "1", "", obj3, alertDialog);
+                    }
+                    return;
+                }
+
+                ProductPayment.type = spinnerType.getSelectedItemPosition();
+                ProductPayment.product_type = 1;
+                ProductPayment.size = "";
+                ProductPayment.quantity = 1;
+                startActivity(new Intent(BasketShoping.this, PaymentActivity.class));
+                alertDialog.cancel();
+                return;
+            }
+
+        });
+    }
+
     public final void showDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         View view = getLayoutInflater().inflate(R.layout.layout_buy_product, (ViewGroup) null, false);
@@ -136,6 +192,7 @@ public class BasketShoping extends AppCompatActivity {
         final Spinner spinnerType = (Spinner) view.findViewById(R.id.spinnerType);
         final EditText edtQuantity = view.findViewById(R.id.edtQuantity);
         final EditText edtSize = view.findViewById(R.id.edtSize);
+        pbBuy = view.findViewById(R.id.pbBuy);
 
         spinnerType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -220,7 +277,14 @@ public class BasketShoping extends AppCompatActivity {
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     if (jsonObject.get(NotificationCompat.CATEGORY_STATUS).toString().equals("1")) {
-                        Toast.makeText(BasketShoping.this, "Product ordered Successfully", 0).show();
+                        if(!isOrdered) {
+                            Toast.makeText(BasketShoping.this, "Product ordered Successfully", 0).show();
+                            if(ProductPayment.product_type == 1){
+                                DataContainer.products = null;
+                                startActivity(new Intent(BasketShoping.this, CustomerActivity.class));
+                            }
+                        }
+                        isOrdered = true;
                         alertDialog.cancel();
                     }
                     else {
